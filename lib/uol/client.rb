@@ -10,11 +10,11 @@ module Uol
     end
 
     def avengers
-      Uol::Api::Avengers.new(self)
+      Uol::Api::Avengers.new(self, Uol::Models::SuperHero)
     end
 
     def justice_league
-      Uol::Api::JusticeLeague.new(self)
+      Uol::Api::JusticeLeague.new(self, Uol::Models::SuperHero)
     end
 
     def connection

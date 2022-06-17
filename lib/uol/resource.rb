@@ -23,12 +23,22 @@ module Uol
     def parse_response(body, type)
       case type
       when 'avengers'
-        JSON.parse(body.gsub(/:([a-zA-z]+)/, '"\\1"').gsub('=>', ': ')).symbolize_keys
+        create_objects JSON.parse(body.gsub(/:([a-zA-z]+)/, '"\\1"').gsub('=>', ': '))
+                           .symbolize_keys[:vingadores].pluck('codinome')
       when 'justice_league'
-        Hash.from_xml(body)
+        create_objects Hash.from_xml(body)['liga_da_justica']['codinomes']['codinome']
       else
         raise 'INVALID TYPE'
       end
+    end
+
+    def create_objects(code_names)
+      objects = []
+
+      code_names.each do |code_name|
+        objects << klass.new(code_name: code_name)
+      end
+      objects
     end
   end
 end
