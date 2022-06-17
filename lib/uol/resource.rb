@@ -16,11 +16,18 @@ module Uol
     def handle_response(response, type)
       case response.status
       when 200
-        if type == 'avengers'
-          JSON.parse(response.body.gsub(/:([a-zA-z]+)/, '"\\1"').gsub('=>', ': ')).symbolize_keys
-        else
-          
-        end
+        parse_response(response.body, type)
+      end
+    end
+
+    def parse_response(body, type)
+      case type
+      when 'avengers'
+        JSON.parse(body.gsub(/:([a-zA-z]+)/, '"\\1"').gsub('=>', ': ')).symbolize_keys
+      when 'justice_league'
+        Hash.from_xml(body)
+      else
+        raise 'INVALID TYPE'
       end
     end
   end

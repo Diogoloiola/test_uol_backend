@@ -13,6 +13,10 @@ module Uol
       Uol::Api::Avengers.new(self)
     end
 
+    def justice_league
+      Uol::Api::JusticeLeague.new(self)
+    end
+
     def connection
       @connection ||= Faraday.new(BASE_URL) do |con|
         con.adapter adapter
